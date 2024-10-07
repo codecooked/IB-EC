@@ -91,48 +91,45 @@
     </div>
     
     <script>
-        const minPasswordLength = 5;
-        const maxPasswordLength = 15;
-        const birthdayInput = document.getElementById('birthday');
+        document.getElementById('signupForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const email = document.getElementById('email').value;
+            const fullName = document.getElementById('fullName').value;
 
-        function isValidEmail(email) {
-            return email.includes('@') && email.toLowerCase().endsWith('.com');
-        }
-        
+            // Check for empty fields
+            if (!email || !password || !confirmPassword || !fullName) {
+                alert('Please fill in all fields.');
+            } 
+            // Check if passwords match
+            else if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+            } 
+            // Check password length
+            else if (password.length < 6) {
+                alert('Password must be at least 6 characters long!');
+            } 
+            // All validations passed
+            else {
+                alert('Signing up. Please wait...'); 
+                this.submit();  // Submit the form to register-user.php
+            }
+        });
+
         function togglePassword() {
             const passwordInput = document.getElementById('password');
-            const confirmPassword = document.getElementById('confirmPassword');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
             const showPasswordCheckbox = document.getElementById('show-password');
             
             if (showPasswordCheckbox.checked) {
                 passwordInput.type = 'text';
-                confirmPassword.type = 'text';
+                confirmPasswordInput.type = 'text';
             } else {
                 passwordInput.type = 'password';
-                confirmPassword.type = 'password';
+                confirmPasswordInput.type = 'password';
             }
         }
-
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const birthday = document.getElementById('birthday').value;
-        
-            if (!isValidEmail(email)) {
-                alert('Please enter a valid email address with @ and ending with .com');
-            }
-        
-            if (password.length < minPasswordLength || password.length > maxPasswordLength) {
-                alert(`Password must be between ${minPasswordLength} and ${maxPasswordLength} characters long.`);
-            }
-        
-            if (password !== confirmPassword) {
-                alert("Passwords don't match!");
-            }
-            alert('Account created successfully!');
-        });
     </script>
 </body>
 </html>
