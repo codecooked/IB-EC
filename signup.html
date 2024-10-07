@@ -91,41 +91,67 @@
     </div>
     
     <script>
-        document.getElementById('signupForm').addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent the default form submission
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const email = document.getElementById('email').value;
-            const fullName = document.getElementById('fullName').value;
-            if (!email || !password || !confirmPassword || !fullName) {
-                alert('Please fill in all fields.');
-            } 
-            else if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-            } 
-            // Check password length
-            else if (password.length < 6) {
-                alert('Password must be at least 6 characters long!');
-            } 
-            else {
-                alert('Signing up. Please wait...'); 
-                this.submit(); 
-            }
-        });
+        const minPasswordLength = 5;
+        const maxPasswordLength = 15;
+        const birthdayInput = document.getElementById('birthday');
 
+        function isValidEmail(email) {
+            return email.includes('@') && email.toLowerCase().endsWith('.com');
+        }
+        
         function togglePassword() {
             const passwordInput = document.getElementById('password');
-            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const confirmPassword = document.getElementById('confirmPassword');
             const showPasswordCheckbox = document.getElementById('show-password');
             
             if (showPasswordCheckbox.checked) {
                 passwordInput.type = 'text';
-                confirmPasswordInput.type = 'text';
+                confirmPassword.type = 'text';
             } else {
                 passwordInput.type = 'password';
-                confirmPasswordInput.type = 'password';
+                confirmPassword.type = 'password';
             }
         }
+
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const birthday = document.getElementById('birthday').value;
+            
+            if (!isValidEmail(email)) {
+                e.preventDefault(); 
+                alert('Please enter a valid email address with @ and ending with .com');
+                return;
+            }
+
+            if (password.length < minPasswordLength || password.length > maxPasswordLength) {
+                e.preventDefault(); 
+                alert(`Password must be between ${minPasswordLength} and ${maxPasswordLength} characters long.`);
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                e.preventDefault(); 
+                alert("Passwords don't match!");
+                return;
+            }
+            
+            console.log('Sign up:', fullName, email, password, birthday);
+            alert('Account created successfully!');
+            window.location.href = 'index.html';
+        });
+
+        birthdayInput.addEventListener('change', function() {
+            const selectedDate = new Date(birthdayInput.value);
+            const selectedYear = selectedDate.getFullYear();
+
+            if (selectedYear >= 2015) {
+                alert('You should be at least 18 years old! (year 2007 and below)');
+                birthdayInput.value = '';
+            }
+        });
     </script>
 </body>
 </html>
