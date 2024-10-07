@@ -124,17 +124,14 @@
         
             if (!isValidEmail(email)) {
                 alert('Please enter a valid email address with @ and ending with .com');
-                return;
             }
         
             if (password.length < minPasswordLength || password.length > maxPasswordLength) {
                 alert(`Password must be between ${minPasswordLength} and ${maxPasswordLength} characters long.`);
-                return;
             }
         
             if (password !== confirmPassword) {
                 alert("Passwords don't match!");
-                return;
             }
             alert('Account created successfully!');
         });
