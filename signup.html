@@ -97,12 +97,9 @@
             const confirmPassword = document.getElementById('confirmPassword').value;
             const email = document.getElementById('email').value;
             const fullName = document.getElementById('fullName').value;
-
-            // Check for empty fields
             if (!email || !password || !confirmPassword || !fullName) {
                 alert('Please fill in all fields.');
             } 
-            // Check if passwords match
             else if (password !== confirmPassword) {
                 alert('Passwords do not match!');
             } 
@@ -110,10 +107,9 @@
             else if (password.length < 6) {
                 alert('Password must be at least 6 characters long!');
             } 
-            // All validations passed
             else {
                 alert('Signing up. Please wait...'); 
-                this.submit();  // Submit the form to register-user.php
+                this.submit(); 
             }
         });
 
